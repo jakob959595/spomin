@@ -1,0 +1,2 @@
+# spomin
+spomin igrca
