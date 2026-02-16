@@ -6,12 +6,11 @@
     <link rel="stylesheet" href="spomin-css.css">
     <title>Spomin - Memory Igra</title>
 </head>
-<body>
+<body onload="zacetek()">
     <div class="kontejner">
         <h1>🎮 SPOMIN 🎮</h1>
         
         <div class="vsebina">
-            <!-- LEVA STRAN -->
             <div class="leva-stran">
                 <div class="navodila">
                     <h2>Navodila</h2>
@@ -29,33 +28,33 @@
                     <div class="gumbi">
                         <button id="btn-zacni" class="btn-zacni">Začni igro</button>
                         <button id="btn-reset" class="btn-reset">Novo igro</button>
+                        <hr>
+                        <br>
                     </div>
                 </div>
-            </div>
 
-            <!-- DESNA STRAN -->
-            <div class="desna-stran">
                 <div class="info">
                     <div class="info-element">
-                        <span>⏱️ Čas</span>
+                        <span>Čas</span>
                         <span id="cas">0:00</span>
                     </div>
                     <div class="info-element">
-                        <span>🖱️ Kliki</span>
+                        <span>Kliki</span>
                         <span id="kliki">0</span>
                     </div>
                     <div class="info-element">
-                        <span>✅ Pari</span>
+                        <span>Pari</span>
                         <span id="pari">0</span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- IGRALNO POLJE -->
-        <div class="container-igralnega">
-            <div id="igralno-polje" class="igralno-polje"></div>
-            <div id="obvestilo" class="obvestilo"></div>
+            <div class="desna-stran">
+                <div class="container-igralnega">
+                    <div id="igralno-polje" class="igralno-polje"></div>
+                    <div id="obvestilo" class="obvestilo"></div>
+                </div>
+            </div>
         </div>
     </div>
 

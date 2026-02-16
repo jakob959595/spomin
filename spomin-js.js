@@ -1,212 +1,190 @@
-let selIgrnoPolje;
-let kartice = [];
-let steviloParov = 0;
-let odporljeKartice = [];
-let najdeniPari = 0;
-let kliki = 0;
-let cas = 0;
-let casMerjenja = null;
-let igraSeVrti = false;
+var selIgrnoPolje;
+var kartice=[];
+var steviloParov=0;
+var odporljeKartice=[];
+var najdeniPari=0;
+var kliki=0;
+var cas=0;
+var casMerjenja=null;
+var igraSeVrti=false;
+var casInterval=null;
 
-const slike = ['🍎', '🍌', '🍒', '🍊', '🍉', '🍓', '🍍', '🥑'];
+var slike=['🍎','🍌','🍒','🍊','🍉','🍓','🍍','🥑'];
 
-document.addEventListener('DOMContentLoaded', function () {
+function zacetek()
+{
     selIgrnoPolje = document.getElementById('igralno-polje');
-    
-    document.querySelectorAll('.btn-tezavnost').forEach(btn => {
-        btn.addEventListener('click', izbreriTezavnost);
-    });
-
-    document.getElementById('btn-zacni').addEventListener('click', zacniIgro);
-    document.getElementById('btn-reset').addEventListener('click', resetIgro);
-});
-
-function izbreriTezavnost(event) {
-    document.querySelectorAll('.btn-tezavnost').forEach(btn => {
-        btn.classList.remove('aktivna');
-    });
-
-    event.target.classList.add('aktivna');
-    steviloParov = parseInt(event.target.dataset.pari);
-    document.getElementById('obvestilo').textContent = `Izbral si ${steviloParov} parov`;
+    var gumbi = document.getElementsByClassName('btn-tezavnost');
+    for(var i=0;i<gumbi.length;i++)
+    {
+        gumbi[i].onclick = izbreriTezavnost;
+    }
+    document.getElementById('btn-zacni').onclick = zacniIgro;
+    document.getElementById('btn-reset').onclick = resetIgro;
 }
 
-function zacniIgro() {
-    if (steviloParov === 0) {
-        document.getElementById('obvestilo').textContent = '⚠️ Izberi težavnost!';
+function izbreriTezavnost()
+{
+    var gumbi = document.getElementsByClassName('btn-tezavnost');
+    for(var i=0;i<gumbi.length;i++)
+    {
+        gumbi[i].className='btn-tezavnost';
+    }
+    this.className='btn-tezavnost aktivna';
+    steviloParov = Number(this.getAttribute('data-pari'));
+    document.getElementById('obvestilo').innerHTML='Izbral si '+steviloParov+' parov';
+}
+
+function zacniIgro()
+{
+    if(steviloParov==0){
+        document.getElementById('obvestilo').innerHTML='Izberi tezavnost!';
         return;
     }
-
     resetIgro();
-    igraSeVrti = true;
-    document.getElementById('btn-zacni').disabled = true;
-
+    igraSeVrti=true;
+    document.getElementById('btn-zacni').disabled=true;
     pripraviKartice();
     premesiKartice();
     narediKarticeHTML();
-
-    casMerjenja = new Date();
+    casMerjenja=new Date();
     meriCas();
-    predvajajGlas();
 }
 
-function pripraviKartice() {
-    kartice = [];
-    
-    const potrebneSlike = slike.slice(0, steviloParov);
-    
-    potrebneSlike.forEach(slika => {
-        kartice.push({ slika: slika, id: Math.random(), odkrita: false, izginula: false });
-        kartice.push({ slika: slika, id: Math.random(), odkrita: false, izginula: false });
-    });
-}
-
-function premesiKartice() {
-    for (let i = kartice.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [kartice[i], kartice[j]] = [kartice[j], kartice[i]];
+function pripraviKartice()
+{
+    kartice=[];
+    for(var i=0;i<steviloParov;i++)
+    {
+        var k1={slika:slike[i],odkrita:false,izginula:false};
+        var k2={slika:slike[i],odkrita:false,izginula:false};
+        kartice.push(k1);
+        kartice.push(k2);
     }
 }
 
-function narediKarticeHTML() {
-    selIgrnoPolje.innerHTML = '';
-    
-    selIgrnoPolje.className = `igralno-polje pari-${steviloParov}`;
-
-    kartice.forEach((kartica, indeks) => {
-        const gumb = document.createElement('button');
-        gumb.className = 'kartica';
-        gumb.dataset.indeks = indeks;
-        gumb.textContent = '?';
-        
-        gumb.addEventListener('click', () => odpriKartico(indeks));
-        
-        selIgrnoPolje.appendChild(gumb);
-    });
+function premesiKartice()
+{
+    for(var i=kartice.length-1;i>0;i--)
+    {
+        var j=Math.floor(Math.random()*(i+1));
+        var temp=kartice[i];
+        kartice[i]=kartice[j];
+        kartice[j]=temp;
+    }
 }
 
-function odpriKartico(indeks) {
-    if (!igraSeVrti) return;
-    if (kartice[indeks].odkrita) return;
-    if (kartice[indeks].izginula) return;
-    if (odporljeKartice.length >= 2) return;
+function narediKarticeHTML()
+{
+    var str='';
+    selIgrnoPolje.className='igralno-polje pari-'+steviloParov;
+    for(var i=0;i<kartice.length;i++)
+    {
+        str+='<button class="kartica" data-indeks="'+i+'" onclick="odpriKartico('+i+')">?</button>';
+    }
+    selIgrnoPolje.innerHTML=str;
+}
 
-    kartice[indeks].odkrita = true;
+function odpriKartico(indeks)
+{
+    if(!igraSeVrti)return;
+    if(kartice[indeks].odkrita)return;
+    if(kartice[indeks].izginula)return;
+    if(odporljeKartice.length>=2)return;
+
+    kartice[indeks].odkrita=true;
     odporljeKartice.push(indeks);
 
-    const gumb = document.querySelector(`[data-indeks="${indeks}"]`);
-    gumb.textContent = kartice[indeks].slika;
-    gumb.classList.add('odkrita');
+    var gumb=document.querySelector('[data-indeks="'+indeks+'"]');
+    gumb.innerHTML=kartice[indeks].slika;
+    gumb.className='kartica odkrita';
 
     kliki++;
-    document.getElementById('kliki').textContent = kliki;
+    document.getElementById('kliki').innerHTML=kliki;
 
-    if (odporljeKartice.length === 2) {
-        setTimeout(preverijParico, 1000);
+    if(odporljeKartice.length==2){
+        setTimeout(preverijParico,1000);
     }
 }
 
-function preverijParico() {
-    const [indeks1, indeks2] = odporljeKartice;
-    const kartica1 = kartice[indeks1];
-    const kartica2 = kartice[indeks2];
+function preverijParico()
+{
+    var indeks1=odporljeKartice[0];
+    var indeks2=odporljeKartice[1];
+    var kartica1=kartice[indeks1];
+    var kartica2=kartice[indeks2];
 
-    if (kartica1.slika === kartica2.slika) {
-        kartica1.izginula = true;
-        kartica2.izginula = true;
-
-        const gumb1 = document.querySelector(`[data-indeks="${indeks1}"]`);
-        const gumb2 = document.querySelector(`[data-indeks="${indeks2}"]`);
-        gumb1.classList.add('izginula');
-        gumb2.classList.add('izginula');
-
+    if(kartica1.slika==kartica2.slika){
+        kartica1.izginula=true;
+        kartica2.izginula=true;
+        var g1=document.querySelector('[data-indeks="'+indeks1+'"]');
+        var g2=document.querySelector('[data-indeks="'+indeks2+'"]');
+        g1.className='kartica izginula';
+        g2.className='kartica izginula';
         najdeniPari++;
-        document.getElementById('pari').textContent = najdeniPari;
-
-        if (najdeniPari === steviloParov) {
+        document.getElementById('pari').innerHTML=najdeniPari;
+        if(najdeniPari==steviloParov){
             koncajIgro();
         }
-    } else {
-        const gumb1 = document.querySelector(`[data-indeks="${indeks1}"]`);
-        const gumb2 = document.querySelector(`[data-indeks="${indeks2}"]`);
-
-        gumb1.classList.remove('odkrita');
-        gumb2.classList.remove('odkrita');
-        gumb1.textContent = '?';
-        gumb2.textContent = '?';
-
-        kartica1.odkrita = false;
-        kartica2.odkrita = false;
+    }else{
+        var g1=document.querySelector('[data-indeks="'+indeks1+'"]');
+        var g2=document.querySelector('[data-indeks="'+indeks2+'"]');
+        g1.className='kartica';
+        g2.className='kartica';
+        g1.innerHTML='?';
+        g2.innerHTML='?';
+        kartica1.odkrita=false;
+        kartica2.odkrita=false;
     }
-
-    odporljeKartice = [];
+    odporljeKartice=[];
 }
 
-function meriCas() {
-    if (!casMerjenja) return;
-
-    const casIntervala = setInterval(() => {
-        if (!igraSeVrti) {
-            clearInterval(casIntervala);
+function meriCas()
+{
+    if(!casMerjenja)return;
+    casInterval=setInterval(function(){
+        if(!igraSeVrti){
+            clearInterval(casInterval);
             return;
         }
-
-        const trenutniCas = new Date();
-        const razlika = Math.floor((trenutniCas - casMerjenja) / 1000);
-        const minute = Math.floor(razlika / 60);
-        const sekunde = razlika % 60;
-
-        document.getElementById('cas').textContent = 
-            `${minute}:${sekunde < 10 ? '0' : ''}${sekunde}`;
-    }, 1000);
+        var trenutniCas=new Date();
+        var razlika=Math.floor((trenutniCas-casMerjenja)/1000);
+        var minute=Math.floor(razlika/60);
+        var sekunde=razlika%60;
+        var str=minute+':';
+        if(sekunde<10)str+='0';
+        str+=sekunde;
+        document.getElementById('cas').innerHTML=str;
+    },1000);
 }
 
-function koncajIgro() {
-    igraSeVrti = false;
-    const obvestilo = document.getElementById('obvestilo');
-    
-    obvestilo.classList.add('zmaga');
-    obvestilo.innerHTML = `
-        🎉 <strong>ČESTITKE!</strong> 🎉<br>
-        Našel si vse pare!<br>
-        <small>Čas: ${document.getElementById('cas').textContent} | Kliki: ${kliki}</small>
-    `;
-
-    document.getElementById('btn-zacni').disabled = false;
+function koncajIgro()
+{
+    igraSeVrti=false;
+    var obvestilo=document.getElementById('obvestilo');
+    obvestilo.className='obvestilo zmaga';
+    var str='<strong>CESTITKE!</strong>      ';
+    str+='Našel si vse pare!  ';
+    str+='<small>Cas: '+document.getElementById('cas').innerHTML+' | Kliki: '+kliki+'</small>';
+    obvestilo.innerHTML=str;
+    document.getElementById('btn-zacni').disabled=false;
 }
 
-function resetIgro() {
-    igraSeVrti = false;
-    kartice = [];
-    odporljeKartice = [];
-    najdeniPari = 0;
-    kliki = 0;
-    cas = 0;
-    casMerjenja = null;
-
-    document.getElementById('kliki').textContent = '0';
-    document.getElementById('pari').textContent = '0';
-    document.getElementById('cas').textContent = '0:00';
-    document.getElementById('obvestilo').textContent = '';
-    document.getElementById('obvestilo').className = 'obvestilo';
-    
-    selIgrnoPolje.innerHTML = '';
-    document.getElementById('btn-zacni').disabled = false;
-}
-
-function predvajajGlas() {
-    const audioKontekst = new (window.AudioContext || window.webkitAudioContext)();
-    
-    const oscilator = audioKontekst.createOscillator();
-    const ojacevec = audioKontekst.createGain();
-    
-    oscilator.connect(ojacevec);
-    ojacevec.connect(audioKontekst.destination);
-    
-    oscilator.frequency.value = 800;
-    ojacevec.gain.setValueAtTime(0.3, audioKontekst.currentTime);
-    ojacevec.gain.exponentialRampToValueAtTime(0.01, audioKontekst.currentTime + 0.1);
-    
-    oscilator.start(audioKontekst.currentTime);
-    oscilator.stop(audioKontekst.currentTime + 0.1);
+function resetIgro()
+{
+    igraSeVrti=false;
+    if(casInterval)clearInterval(casInterval);
+    kartice=[];
+    odporljeKartice=[];
+    najdeniPari=0;
+    kliki=0;
+    cas=0;
+    casMerjenja=null;
+    document.getElementById('kliki').innerHTML='0';
+    document.getElementById('pari').innerHTML='0';
+    document.getElementById('cas').innerHTML='0:00';
+    document.getElementById('obvestilo').innerHTML='';
+    document.getElementById('obvestilo').className='obvestilo';
+    selIgrnoPolje.innerHTML='';
+    document.getElementById('btn-zacni').disabled=false;
 }
