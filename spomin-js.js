@@ -42,13 +42,31 @@ function zacniIgro()
         return;
     }
     resetIgro();
-    igraSeVrti=true;
     document.getElementById('btn-zacni').disabled=true;
     pripraviKartice();
     premesiKartice();
     narediKarticeHTML();
-    casMerjenja=new Date();
-    meriCas();
+
+    // Pokaži vse kartice za 2 sekundi
+    var vseKartice = document.querySelectorAll('.kartica');
+    for(var i=0;i<vseKartice.length;i++){
+        vseKartice[i].innerHTML=kartice[i].slika;
+        vseKartice[i].className='kartica odkrita';
+    }
+    document.getElementById('obvestilo').innerHTML='Zapomni si kartice!';
+
+    setTimeout(function(){
+        // Skrij vse kartice
+        var vseKartice = document.querySelectorAll('.kartica');
+        for(var i=0;i<vseKartice.length;i++){
+            vseKartice[i].innerHTML='?';
+            vseKartice[i].className='kartica';
+        }
+        document.getElementById('obvestilo').innerHTML='';
+        igraSeVrti=true;
+        casMerjenja=new Date();
+        meriCas();
+    },2000);
 }
 
 function pripraviKartice()
