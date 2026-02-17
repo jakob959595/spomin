@@ -47,7 +47,6 @@ function zacniIgro()
     premesiKartice();
     narediKarticeHTML();
 
-    // Pokaži vse kartice za 2 sekundi
     var vseKartice = document.querySelectorAll('.kartica');
     for(var i=0;i<vseKartice.length;i++){
         vseKartice[i].innerHTML=kartice[i].slika;
@@ -56,7 +55,6 @@ function zacniIgro()
     document.getElementById('obvestilo').innerHTML='Zapomni si kartice!';
 
     setTimeout(function(){
-        // Skrij vse kartice
         var vseKartice = document.querySelectorAll('.kartica');
         for(var i=0;i<vseKartice.length;i++){
             vseKartice[i].innerHTML='?';
