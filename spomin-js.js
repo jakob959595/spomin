@@ -13,6 +13,10 @@ var slike=['🦇','🦸','⚡','🔱','🏹','🃏','🦹','🐧'];
 function zacetek()
 {
     selIgrnoPolje = document.getElementById('igralno-polje');
+    var str ='<h2>Navodila</h2>\n';
+    str+='<p>Klikni na kartice in poiščite ujemajoče se pare.</p>\n';
+    str+='<p>Kartice se zapirajo po 2 sekundah, če se ne ujemata.</p>\n';
+    document.getElementById('navodila').innerHTML=str;
     document.getElementById('select-tezavnost').onchange = izbreriTezavnost;
     document.getElementById('btn-zacni').onclick = zacniIgro;
     document.getElementById('btn-reset').onclick = resetIgro;
