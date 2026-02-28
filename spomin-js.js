@@ -8,7 +8,7 @@ var cas=0;
 var igraSeVrti=false;
 var casInterval=null;
 
-var slike=['🍎','🍌','🍒','🍊','🍉','🍓','🍍','🥑'];
+var slike=['🦇','🦸','⚡','🔱','🏹','🃏','🦹','🐧'];
 
 function zacetek()
 {
@@ -43,10 +43,10 @@ function zacniIgro()
     }
     document.getElementById('obvestilo').innerHTML='Zapomni si kartice!';
 
-    setTimeout(pokazikartice,2000);
+    setTimeout(skrijkartice,2000);
 }
 
-function pokazikartice()
+function skrijkartice()
 {
     var vseKartice = document.querySelectorAll('.kartica');
     for(var i=0;i<vseKartice.length;i++){
@@ -64,8 +64,8 @@ function pripraviKartice()
     kartice=[];
     for(var i=0;i<steviloParov;i++)
     {
-        var k1={slika:slike[i],odkrita:false,izginula:false};
-        var k2={slika:slike[i],odkrita:false,izginula:false};
+        var k1={slika:slike[i],odkrita:false,najdena:false};
+        var k2={slika:slike[i],odkrita:false,najdena:false};
         kartice.push(k1);
         kartice.push(k2);
     }
@@ -97,7 +97,7 @@ function odpriKartico(indeks)
 {
     if(!igraSeVrti)return;
     if(kartice[indeks].odkrita)return;
-    if(kartice[indeks].izginula)return;
+    if(kartice[indeks].najdena)return;
     if(odporljeKartice.length>=2)return;
 
     kartice[indeks].odkrita=true;
@@ -123,12 +123,12 @@ function preverijParico()
     var kartica2=kartice[indeks2];
 
     if(kartica1.slika==kartica2.slika){
-        kartica1.izginula=true;
-        kartica2.izginula=true;
+        kartica1.najdena=true;
+        kartica2.najdena=true;
         var g1=document.querySelector('[data-indeks="'+indeks1+'"]');
         var g2=document.querySelector('[data-indeks="'+indeks2+'"]');
-        g1.className='kartica izginula';
-        g2.className='kartica izginula';
+        g1.className='kartica najdena';
+        g2.className='kartica najdena';
         najdeniPari++;
         document.getElementById('pari').innerHTML=najdeniPari;
         if(najdeniPari==steviloParov){

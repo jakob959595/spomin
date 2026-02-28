@@ -226,7 +226,7 @@ h2 {
     font-weight: bold;
 }
 
-.kartica:hover:not(.odkrita):not(.izginula) {
+.kartica:hover:not(.odkrita):not(.najdena) {
     background: #1976D2;
     transform: scale(1.05);
 }
@@ -238,7 +238,7 @@ h2 {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.kartica.izginula {
+.kartica.najdena {
     background: #e0e0e0;
     cursor: default;
     opacity: 0.6;
