@@ -5,7 +5,6 @@ var odporljeKartice=[];
 var najdeniPari=0;
 var kliki=0;
 var cas=0;
-var casMerjenja=null;
 var igraSeVrti=false;
 var casInterval=null;
 
@@ -14,24 +13,14 @@ var slike=['🍎','🍌','🍒','🍊','🍉','🍓','🍍','🥑'];
 function zacetek()
 {
     selIgrnoPolje = document.getElementById('igralno-polje');
-    var gumbi = document.getElementsByClassName('btn-tezavnost');
-    for(var i=0;i<gumbi.length;i++)
-    {
-        gumbi[i].onclick = izbreriTezavnost;
-    }
+    document.getElementById('select-tezavnost').onchange = izbreriTezavnost;
     document.getElementById('btn-zacni').onclick = zacniIgro;
     document.getElementById('btn-reset').onclick = resetIgro;
 }
 
 function izbreriTezavnost()
 {
-    var gumbi = document.getElementsByClassName('btn-tezavnost');
-    for(var i=0;i<gumbi.length;i++)
-    {
-        gumbi[i].className='btn-tezavnost';
-    }
-    this.className='btn-tezavnost aktivna';
-    steviloParov = Number(this.getAttribute('data-pari'));
+    steviloParov = Number(this.value);
     document.getElementById('obvestilo').innerHTML='Izbral si '+steviloParov+' parov';
 }
 
@@ -54,17 +43,20 @@ function zacniIgro()
     }
     document.getElementById('obvestilo').innerHTML='Zapomni si kartice!';
 
-    setTimeout(function(){
-        var vseKartice = document.querySelectorAll('.kartica');
-        for(var i=0;i<vseKartice.length;i++){
-            vseKartice[i].innerHTML='?';
-            vseKartice[i].className='kartica';
-        }
+    setTimeout(pokazikartice,2000);
+}
+
+function pokazikartice()
+{
+    var vseKartice = document.querySelectorAll('.kartica');
+    for(var i=0;i<vseKartice.length;i++){
+        vseKartice[i].innerHTML='?';
+        vseKartice[i].className='kartica';
+    }
         document.getElementById('obvestilo').innerHTML='';
         igraSeVrti=true;
-        casMerjenja=new Date();
+        cas=0;
         meriCas();
-    },2000);
 }
 
 function pripraviKartice()
@@ -157,16 +149,14 @@ function preverijParico()
 
 function meriCas()
 {
-    if(!casMerjenja)return;
     casInterval=setInterval(function(){
         if(!igraSeVrti){
             clearInterval(casInterval);
             return;
         }
-        var trenutniCas=new Date();
-        var razlika=Math.floor((trenutniCas-casMerjenja)/1000);
-        var minute=Math.floor(razlika/60);
-        var sekunde=razlika%60;
+        cas++;
+        var minute=Math.floor(cas/60);
+        var sekunde=cas%60;
         var str=minute+':';
         if(sekunde<10)str+='0';
         str+=sekunde;
@@ -195,7 +185,6 @@ function resetIgro()
     najdeniPari=0;
     kliki=0;
     cas=0;
-    casMerjenja=null;
     document.getElementById('kliki').innerHTML='0';
     document.getElementById('pari').innerHTML='0';
     document.getElementById('cas').innerHTML='0:00';

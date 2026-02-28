@@ -21,13 +21,16 @@
                 <div class="nastavitve">
                     <h2>Izbira igre</h2>
                     <div class="izbira-tezavnosti">
-                        <button class="btn-tezavnost" data-pari="4">Lahka (4 pari)</button>
-                        <button class="btn-tezavnost" data-pari="6">Srednja (6 parov)</button>
-                        <button class="btn-tezavnost" data-pari="8">Težka (8 parov)</button>
+                        <select id="select-tezavnost" class="select-tezavnost">
+                            <option value="0" disabled selected>-- Izberi težavnost --</option>
+                            <option value="4">Lahka (4 pari)</option>
+                            <option value="6">Srednja (6 parov)</option>
+                            <option value="8">Težka (8 parov)</option>
+                        </select>
                     </div>
                     <div class="gumbi">
                         <button id="btn-zacni" class="btn-zacni">Začni igro</button>
-                        <button id="btn-reset" class="btn-reset">Novo igro</button>
+                        <button id="btn-reset" class="btn-reset">Nova igra</button>
                         <hr>
                         <br>
                     </div>
