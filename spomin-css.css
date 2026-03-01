@@ -13,6 +13,12 @@ body {
 .kontejner {
     max-width: 1400px;
     margin: 0 auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.kontejner td {
+    border: none;
 }
 
 h1 {
@@ -31,10 +37,17 @@ h2 {
 }
 
 .vsebina {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 30px;
     margin-bottom: 30px;
+}
+
+.vsebina td {
+    vertical-align: top;
+    border: none;
+}
+
+.vsebina td:first-child {
+    width: 250px;
+    padding-right: 30px;
 }
 
 .leva-stran {
@@ -46,6 +59,8 @@ h2 {
 
 .navodila {
     margin-bottom: 30px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .navodila p {
@@ -57,12 +72,17 @@ h2 {
 
 .nastavitve {
     margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.izbira-tezavnosti {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.nastavitve td {
+    border: none;
+}
+
+.izbira-tezavnosti td {
+    padding: 10px 0;
+    border: none;
 }
 
 .select-tezavnost {
@@ -101,11 +121,15 @@ h2 {
     color: #e0e0e0;
 }
 
-.gumbi {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
+.gumbi td {
+    padding-top: 20px;
+    border: none;
+}
+
+.gumbi button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .btn-zacni, .btn-reset {
@@ -141,26 +165,41 @@ h2 {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
 }
 
 .desna-stran .container-igralnega {
-    flex: 1;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.desna-stran .container-igralnega td {
+    border: none;
 }
 
 .info {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    width: 90%;
+    border-collapse: collapse;
+    margin: 0 auto;
 }
 
-.info-element {
+.info tr {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.info tr:last-child {
+    margin-bottom: 0;
+}
+
+.info-element td {
     text-align: center;
     padding: 15px;
     background: #333333;
     border-radius: 5px;
     border-left: 4px solid #2196F3;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
 }
 
 .info-element span:first-child {
@@ -182,6 +221,12 @@ h2 {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.container-igralnega td {
+    border: none;
 }
 
 .igralno-polje {
@@ -210,41 +255,46 @@ h2 {
     margin: 0 auto 20px;
 }
 
-.kartica {
+.kartica, .kartica-odkrita, .kartica-najdena {
     aspect-ratio: 1;
-    background: #2196F3;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
     font-size: 2.5em;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    color: white;
     font-weight: bold;
 }
 
-.kartica:hover:not(.odkrita):not(.najdena) {
+.kartica {
+    background: #2196F3;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.kartica:hover {
     background: #1976D2;
     transform: scale(1.05);
 }
 
-.kartica.odkrita {
+.kartica-odkrita {
     background: white;
     color: #333;
     cursor: default;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.kartica.najdena {
+.kartica-najdena {
     background: #e0e0e0;
+    color: #333;
     cursor: default;
     opacity: 0.6;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.kartica:disabled {
+.kartica:disabled, .kartica-odkrita:disabled, .kartica-najdena:disabled {
     cursor: not-allowed;
 }
 
@@ -269,8 +319,15 @@ h2 {
 }
 
 @media (max-width: 1024px) {
-    .vsebina {
-        grid-template-columns: 1fr;
+    .vsebina td:first-child {
+        width: 100%;
+        padding-right: 0;
+        display: block;
+    }
+
+    .vsebina td {
+        display: block;
+        width: 100%;
     }
 
     .igralno-polje.pari-4,
@@ -289,16 +346,18 @@ h2 {
         padding: 15px;
     }
 
-    .info {
-        flex-direction: row;
-        gap: 10px;
+    .info tr {
+        display: inline-block;
+        width: calc(33.33% - 7px);
+        margin-right: 10px;
+        margin-bottom: 0;
     }
 
-    .info-element {
-        flex: 1;
+    .info tr:last-child {
+        margin-right: 0;
     }
 
-    .kartica {
+    .kartica, .kartica-odkrita, .kartica-najdena {
         font-size: 1.8em;
     }
 

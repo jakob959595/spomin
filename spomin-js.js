@@ -1,7 +1,7 @@
-var selIgrnoPolje;
+var IgralnoPolje;
 var kartice=[];
 var steviloParov=0;
-var odporljeKartice=[];
+var odprteKartice=[];
 var najdeniPari=0;
 var kliki=0;
 var cas=0;
@@ -12,7 +12,7 @@ var slike=['🦇','🦸','⚡','🔱','🏹','🃏','🦹','🐧'];
 
 function zacetek()
 {
-    selIgrnoPolje = document.getElementById('igralno-polje');
+    IgralnoPolje = document.getElementById('igralno-polje');
     var str ='<h2>Navodila</h2>\n';
     str+='<p>Klikni na kartice in poiščite ujemajoče se pare.</p>\n';
     str+='<p>Kartice se zapirajo po 2 sekundah, če se ne ujemata.</p>\n';
@@ -43,7 +43,7 @@ function zacniIgro()
     var vseKartice = document.querySelectorAll('.kartica');
     for(var i=0;i<vseKartice.length;i++){
         vseKartice[i].innerHTML=kartice[i].slika;
-        vseKartice[i].className='kartica odkrita';
+        vseKartice[i].className='kartica-odkrita';
     }
     document.getElementById('obvestilo').innerHTML='Zapomni si kartice!';
 
@@ -52,7 +52,7 @@ function zacniIgro()
 
 function skrijkartice()
 {
-    var vseKartice = document.querySelectorAll('.kartica');
+    var vseKartice = document.querySelectorAll('.kartica-odkrita');
     for(var i=0;i<vseKartice.length;i++){
         vseKartice[i].innerHTML='?';
         vseKartice[i].className='kartica';
@@ -89,12 +89,12 @@ function premesiKartice()
 function narediKarticeHTML()
 {
     var str='';
-    selIgrnoPolje.className='igralno-polje pari-'+steviloParov;
+    IgralnoPolje.className='igralno-polje pari-'+steviloParov;
     for(var i=0;i<kartice.length;i++)
     {
         str+='<button class="kartica" data-indeks="'+i+'" onclick="odpriKartico('+i+')">?</button>';
     }
-    selIgrnoPolje.innerHTML=str;
+    IgralnoPolje.innerHTML=str;
 }
 
 function odpriKartico(indeks)
@@ -102,27 +102,27 @@ function odpriKartico(indeks)
     if(!igraSeVrti)return;
     if(kartice[indeks].odkrita)return;
     if(kartice[indeks].najdena)return;
-    if(odporljeKartice.length>=2)return;
+    if(odprteKartice.length>=2)return;
 
     kartice[indeks].odkrita=true;
-    odporljeKartice.push(indeks);
+    odprteKartice.push(indeks);
 
     var gumb=document.querySelector('[data-indeks="'+indeks+'"]');
     gumb.innerHTML=kartice[indeks].slika;
-    gumb.className='kartica odkrita';
+    gumb.className='kartica-odkrita';
 
     kliki++;
     document.getElementById('kliki').innerHTML=kliki;
 
-    if(odporljeKartice.length==2){
-        setTimeout(preverijParico,1000);
+    if(odprteKartice.length==2){
+        setTimeout(preveriParico,1000);
     }
 }
 
-function preverijParico()
+function preveriParico()
 {
-    var indeks1=odporljeKartice[0];
-    var indeks2=odporljeKartice[1];
+    var indeks1=odprteKartice[0];
+    var indeks2=odprteKartice[1];
     var kartica1=kartice[indeks1];
     var kartica2=kartice[indeks2];
 
@@ -131,8 +131,8 @@ function preverijParico()
         kartica2.najdena=true;
         var g1=document.querySelector('[data-indeks="'+indeks1+'"]');
         var g2=document.querySelector('[data-indeks="'+indeks2+'"]');
-        g1.className='kartica najdena';
-        g2.className='kartica najdena';
+        g1.className='kartica-najdena';
+        g2.className='kartica-najdena';
         najdeniPari++;
         document.getElementById('pari').innerHTML=najdeniPari;
         if(najdeniPari==steviloParov){
@@ -148,7 +148,7 @@ function preverijParico()
         kartica1.odkrita=false;
         kartica2.odkrita=false;
     }
-    odporljeKartice=[];
+    odprteKartice=[];
 }
 
 function meriCas()
@@ -185,7 +185,7 @@ function resetIgro()
     igraSeVrti=false;
     if(casInterval)clearInterval(casInterval);
     kartice=[];
-    odporljeKartice=[];
+    odprteKartice=[];
     najdeniPari=0;
     kliki=0;
     cas=0;
@@ -194,6 +194,6 @@ function resetIgro()
     document.getElementById('cas').innerHTML='0:00';
     document.getElementById('obvestilo').innerHTML='';
     document.getElementById('obvestilo').className='obvestilo';
-    selIgrnoPolje.innerHTML='';
+    IgralnoPolje.innerHTML='';
     document.getElementById('btn-zacni').disabled=false;
 }

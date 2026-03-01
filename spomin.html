@@ -7,56 +7,77 @@
     <title>Spomin - Memory Igra</title>
 </head>
 <body onload="zacetek()">
-    <div class="kontejner">
-        <h1> SPOMIN </h1>
-        
-        <div class="vsebina">
-            <div class="leva-stran">
-                <div class="navodila" id ="navodila">
-                </div>
+    <table class="kontejner">
+        <tr>
+            <td colspan="2">
+                <h1> SPOMIN </h1>
+            </td>
+        </tr>
+        <tr class="vsebina">
+            <td class="leva-stran">
+                <table class="navodila" id="navodila">
+                </table>
 
-                <div class="nastavitve">
-                    <h2>Izbira igre</h2>
-                    <div class="izbira-tezavnosti">
-                        <select id="select-tezavnost" class="select-tezavnost">
-                            <option value="0" disabled selected>-- Izberi težavnost --</option>
-                            <option value="4">Lahka (4 pari)</option>
-                            <option value="6">Srednja (6 parov)</option>
-                            <option value="8">Težka (8 parov)</option>
-                        </select>
-                    </div>
-                    <div class="gumbi">
-                        <button id="btn-zacni" class="btn-zacni">Začni igro</button>
-                        <button id="btn-reset" class="btn-reset">Nova igra</button>
-                        <hr>
-                        <br>
-                    </div>
-                </div>
+                <table class="nastavitve">
+                    <tr>
+                        <td>
+                            <h2>Izbira igre</h2>
+                        </td>
+                    </tr>
+                    <tr class="izbira-tezavnosti">
+                        <td>
+                            <select id="select-tezavnost" class="select-tezavnost">
+                                <option value="0" disabled selected>-- Izberi težavnost --</option>
+                                <option value="4">Lahka (4 pari)</option>
+                                <option value="6">Srednja (6 parov)</option>
+                                <option value="8">Težka (8 parov)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="gumbi">
+                        <td>
+                            <button id="btn-zacni" class="btn-zacni">Začni igro</button>
+                            <button id="btn-reset" class="btn-reset">Nova igra</button>
+                            <hr>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
 
-                <div class="info">
-                    <div class="info-element">
-                        <span>Čas</span>
-                        <span id="cas">0:00</span>
-                    </div>
-                    <div class="info-element">
-                        <span>Kliki</span>
-                        <span id="kliki">0</span>
-                    </div>
-                    <div class="info-element">
-                        <span>Pari</span>
-                        <span id="pari">0</span>
-                    </div>
-                </div>
-            </div>
+                <table class="info">
+                    <tr class="info-element">
+                        <td>
+                            <span>Čas</span>
+                            <span id="cas">0:00</span>
+                        </td>
+                    </tr>
+                    <tr class="info-element">
+                        <td>
+                            <span>Kliki</span>
+                            <span id="kliki">0</span>
+                        </td>
+                    </tr>
+                    <tr class="info-element">
+                        <td>
+                            <span>Pari</span>
+                            <span id="pari">0</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
 
-            <div class="desna-stran">
-                <div class="container-igralnega">
-                    <div id="igralno-polje" class="igralno-polje"></div>
-                    <div id="obvestilo" class="obvestilo"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <td class="desna-stran">
+                <table class="container-igralnega">
+                    <tr>
+                        <td>
+                            <div id="igralno-polje" class="igralno-polje"></div>
+                            <div id="obvestilo" class="obvestilo"></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 
     <script src="spomin-js.js"></script>
 </body>
