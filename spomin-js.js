@@ -115,7 +115,7 @@ function odpriKartico(indeks)
     document.getElementById('kliki').innerHTML=kliki;
 
     if(odprteKartice.length==2){
-        setTimeout(preveriParico,1000);
+        setTimeout(preveriParico,2000);
     }
 }
 
