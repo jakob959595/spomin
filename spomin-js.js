@@ -7,6 +7,7 @@ var kliki=0;
 var cas=0;
 var igraSeVrti=false;
 var casInterval=null;
+var glasba=null;
 
 var slike=['🦇','🦸','⚡','🔱','🏹','🃏','🦹','🐧'];
 
@@ -20,6 +21,9 @@ function zacetek()
     document.getElementById('select-tezavnost').onchange = izbreriTezavnost;
     document.getElementById('btn-zacni').onclick = zacniIgro;
     document.getElementById('btn-reset').onclick = resetIgro;
+    glasba = new Audio('glasba/carefree.mp3');
+    glasba.volume = 0.067;
+    glasba.loop = true;
 }
 
 function izbreriTezavnost()
@@ -61,6 +65,10 @@ function skrijkartice()
         igraSeVrti=true;
         cas=0;
         meriCas();
+        if(glasba){
+            glasba.currentTime = 0;
+            glasba.play();
+        }
 }
 
 function pripraviKartice()
@@ -171,6 +179,9 @@ function meriCas()
 function koncajIgro()
 {
     igraSeVrti=false;
+    if(glasba){
+        glasba.pause();
+    } 
     var obvestilo=document.getElementById('obvestilo');
     obvestilo.className='obvestilo zmaga';
     var str='<strong>CESTITKE!</strong>      ';
@@ -184,6 +195,9 @@ function resetIgro()
 {
     igraSeVrti=false;
     if(casInterval)clearInterval(casInterval);
+    if(glasba){
+        glasba.pause();
+    }
     kartice=[];
     odprteKartice=[];
     najdeniPari=0;
