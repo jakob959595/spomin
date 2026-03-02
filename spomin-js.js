@@ -100,7 +100,7 @@ function narediKarticeHTML()
     IgralnoPolje.className='igralno-polje pari-'+steviloParov;
     for(var i=0;i<kartice.length;i++)
     {
-        str+='<button class="kartica" data-indeks="'+i+'" onclick="odpriKartico('+i+')">?</button>';
+        str+='<button class="kartica" data-stevilka-kartice="'+i+'" onclick="odpriKartico('+i+')">?</button>';
     }
     IgralnoPolje.innerHTML=str;
 }
@@ -115,7 +115,7 @@ function odpriKartico(indeks)
     kartice[indeks].odkrita=true;
     odprteKartice.push(indeks);
 
-    var gumb=document.querySelector('[data-indeks="'+indeks+'"]');
+    var gumb=document.querySelector('[data-stevilka-kartice="'+indeks+'"]');
     gumb.innerHTML=kartice[indeks].slika;
     gumb.className='kartica-odkrita';
 
@@ -137,8 +137,8 @@ function preveriParico()
     if(kartica1.slika==kartica2.slika){
         kartica1.najdena=true;
         kartica2.najdena=true;
-        var g1=document.querySelector('[data-indeks="'+indeks1+'"]');
-        var g2=document.querySelector('[data-indeks="'+indeks2+'"]');
+        var g1=document.querySelector('[data-stevilka-kartice="'+indeks1+'"]');
+        var g2=document.querySelector('[data-stevilka-kartice="'+indeks2+'"]');
         g1.className='kartica-najdena';
         g2.className='kartica-najdena';
         najdeniPari++;
@@ -147,8 +147,8 @@ function preveriParico()
             koncajIgro();
         }
     }else{
-        var g1=document.querySelector('[data-indeks="'+indeks1+'"]');
-        var g2=document.querySelector('[data-indeks="'+indeks2+'"]');
+        var g1=document.querySelector('[data-stevilka-kartice="'+indeks1+'"]');
+        var g2=document.querySelector('[data-stevilka-kartice="'+indeks2+'"]');
         g1.className='kartica';
         g2.className='kartica';
         g1.innerHTML='?';
