@@ -9,7 +9,7 @@ var igraSeVrti=false;
 var casInterval=null;
 var glasba=null;
 
-var slike=['🦇','🦸','⚡','🔱','🏹','🃏','🦹','🐧'];
+var slike=['slike/goba.png','slike/jajca.png','slike/mavrica.png','slike/nevem.png','slike/oblak.png','slike/roza.png','slike/sladoled.png','slike/srce.png'];
 
 function zacetek()
 {
@@ -46,7 +46,7 @@ function zacniIgro()
 
     var vseKartice = document.querySelectorAll('.kartica');
     for(var i=0;i<vseKartice.length;i++){
-        vseKartice[i].innerHTML=kartice[i].slika;
+        vseKartice[i].innerHTML='<img src="'+kartice[i].slika+'" alt="kartica">';
         vseKartice[i].className='kartica-odkrita';
     }
     document.getElementById('obvestilo').innerHTML='Zapomni si kartice!';
@@ -116,7 +116,7 @@ function odpriKartico(indeks)
     odprteKartice.push(indeks);
 
     var gumb=document.querySelector('[data-stevilka-kartice="'+indeks+'"]');
-    gumb.innerHTML=kartice[indeks].slika;
+    gumb.innerHTML='<img src="'+kartice[indeks].slika+'" alt="kartica">';
     gumb.className='kartica-odkrita';
 
     kliki++;
