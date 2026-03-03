@@ -47,7 +47,7 @@ function zacniIgro()
     var vseKartice = document.querySelectorAll('.kartica');
     for(var i=0;i<vseKartice.length;i++){
         vseKartice[i].innerHTML='<img src="'+kartice[i].slika+'" alt="kartica">';
-        vseKartice[i].className='kartica-odkrita';
+        vseKartice[i].className='kartica-odprta';
     }
     document.getElementById('obvestilo').innerHTML='Zapomni si kartice!';
 
@@ -56,7 +56,7 @@ function zacniIgro()
 
 function skrijkartice()
 {
-    var vseKartice = document.querySelectorAll('.kartica-odkrita');
+    var vseKartice = document.querySelectorAll('.kartica-odprta');
     for(var i=0;i<vseKartice.length;i++){
         vseKartice[i].innerHTML='?';
         vseKartice[i].className='kartica';
@@ -76,8 +76,8 @@ function pripraviKartice()
     kartice=[];
     for(var i=0;i<steviloParov;i++)
     {
-        var k1={slika:slike[i],odkrita:false,najdena:false};
-        var k2={slika:slike[i],odkrita:false,najdena:false};
+        var k1={slika:slike[i],odprta:false,najdena:false};
+        var k2={slika:slike[i],odprta:false,najdena:false};
         kartice.push(k1);
         kartice.push(k2);
     }
@@ -108,16 +108,16 @@ function narediKarticeHTML()
 function odpriKartico(indeks)
 {
     if(!igraSeVrti)return;
-    if(kartice[indeks].odkrita)return;
+    if(kartice[indeks].odprta)return;
     if(kartice[indeks].najdena)return;
     if(odprteKartice.length>=2)return;
 
-    kartice[indeks].odkrita=true;
+    kartice[indeks].odprta=true;
     odprteKartice.push(indeks);
 
     var gumb=document.querySelector('[data-stevilka-kartice="'+indeks+'"]');
     gumb.innerHTML='<img src="'+kartice[indeks].slika+'" alt="kartica">';
-    gumb.className='kartica-odkrita';
+    gumb.className='kartica-odprta';
 
     kliki++;
     document.getElementById('kliki').innerHTML=kliki;
@@ -153,8 +153,8 @@ function preveriParico()
         g2.className='kartica';
         g1.innerHTML='?';
         g2.innerHTML='?';
-        kartica1.odkrita=false;
-        kartica2.odkrita=false;
+        kartica1.odprta=false;
+        kartica2.odprta=false;
     }
     odprteKartice=[];
 }

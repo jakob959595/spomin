@@ -246,7 +246,7 @@ h2 {
     margin: 0 auto 20px;
 }
 
-.kartica, .kartica-odkrita, .kartica-najdena {
+.kartica, .kartica-odprta, .kartica-najdena {
     aspect-ratio: 1;
     width: 100%;
     border: none;
@@ -261,7 +261,7 @@ h2 {
     padding: 10px;
 }
 
-.kartica img, .kartica-odkrita img, .kartica-najdena img {
+.kartica img, .kartica-odprta img, .kartica-najdena img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
@@ -280,7 +280,7 @@ h2 {
     transform: scale(1.05);
 }
 
-.kartica-odkrita {
+.kartica-odprta {
     background: white;
     color: #333;
     cursor: default;
@@ -295,7 +295,7 @@ h2 {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.kartica:disabled, .kartica-odkrita:disabled, .kartica-najdena:disabled {
+.kartica:disabled, .kartica-odprta:disabled, .kartica-najdena:disabled {
     cursor: not-allowed;
 }
 
@@ -358,7 +358,7 @@ h2 {
         margin-right: 0;
     }
 
-    .kartica, .kartica-odkrita, .kartica-najdena {
+    .kartica, .kartica-odprta, .kartica-najdena {
         font-size: 1.8em;
     }
 
